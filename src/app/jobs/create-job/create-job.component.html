@@ -1,1 +1,74 @@
-<p>create-job works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-6 mx-auto">
+      <h1 class="mt-5">Create Job</h1>
+      <form class="row g-3 needs-validation mt-3" [formGroup]="JobForm">
+        <div class="col-12">
+          <label for="job_number" class="form-label">Job Number</label>
+          <input type="text" class="form-control" [ngClass]="job_number.errors && job_number.touched?'border-danger':''" id="job_number" formControlName="job_number">
+          <div *ngIf="job_number.errors && job_number.touched" class="text-danger">
+            Job Number Required
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="job_title" class="form-label">Job Title</label>
+          <input type="text" class="form-control" [ngClass]="job_title.errors && job_title.touched?'border-danger':''" id="job_title" formControlName="job_title">
+          <div *ngIf="job_title.errors && job_title.touched" class="text-danger">
+            Job Title Required
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="job_start_date" class="form-label">Start Date</label>          
+          <input type="date" class="form-control" [ngClass]="job_start_date.errors && job_start_date.touched?'border-danger':''" id="job_start_date" formControlName="job_start_date">
+          <div *ngIf="job_start_date.errors && job_start_date.touched" class="text-danger">
+            Job Start Date is Required
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="job_close_date" class="form-label">Close Date</label>          
+          <input type="date" class="form-control" [ngClass]="job_close_date.errors && job_close_date.touched?'border-danger':''" id="job_close_date" formControlName="job_close_date">
+          <div *ngIf="job_close_date.errors && job_close_date.touched" class="text-danger">
+            Job Close Date is Required
+          </div>
+          
+        </div>
+        <div class="col-12">
+          <label class="mb-3 me-3" for="">Experience Required</label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" formControlName="experience_required" [value]="true">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Yes
+            </label>
+          </div>
+          
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" formControlName="experience_required" [value]="false">
+            <label class="form-check-label" for="flexRadioDefault2">
+              No
+            </label>
+          </div>
+          <div *ngIf="experience_required.errors && experience_required.touched" class="text-danger">
+            Please Choose Experience Required
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="number_of_openings" [ngClass]="number_of_openings.errors && number_of_openings.touched?'border-danger':''" class="form-label">Number Of Openings</label>
+          <input type="number" step="1" class="form-control" id="number_of_openings" formControlName="number_of_openings">
+          <div *ngIf="number_of_openings.errors && number_of_openings.touched" class="text-danger">
+            Number of Openings Required
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="job_notes" class="form-label">Job Notes</label>
+          <input type="text" step="1" class="form-control" [ngClass]="job_notes.errors && job_notes.touched?'border-danger':''" id="job_notes" formControlName="job_notes">
+          <div *ngIf="job_notes.errors && job_notes.touched" class="text-danger">
+            Job Notes Required
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit" [disabled]="JobForm.invalid"  (click)="saveJob()">Submit form</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

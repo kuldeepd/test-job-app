@@ -6,6 +6,12 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './layouts/header/header.component';
 import { ErrorComponent } from './layouts/error/error.component';
+import { StoreModule } from '@ngrx/store';
+import { jobReducer } from './store/job.reducer';
+import { HttpClient } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { JobEffects } from './store/job.effects';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -16,9 +22,11 @@ import { ErrorComponent } from './layouts/error/error.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    StoreModule.forRoot({jobEntries:jobReducer}),
+    FontAwesomeModule,
   ],
-  providers: [],
+  providers: [HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

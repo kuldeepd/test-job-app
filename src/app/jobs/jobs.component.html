@@ -1,1 +1,48 @@
-<p>jobs works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <h1>Jobs List</h1>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary float-end" routerLink="/jobs/new">Add Job</button>
+    </div>
+  </div>
+  <div class="row mt-3">    
+    <div class="col-12 mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Job #</th>
+            <th scope="col">Title</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">Close Date</th>
+            <th scope="col">Experience Required</th>
+            <th scope="col"># of Openings</th>
+            <th scope="col">Job Notes</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let job of jobs$ | async; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              {{ job.job_number }}
+            </td>
+            <td>{{ job.job_title }}</td>
+            <td>{{ job.job_start_date }}</td>
+            <td>{{ job.job_close_date }}</td>
+            <td>{{ job.experience_required ? 'Yes':'No' }}</td>
+            <td>{{ job.number_of_openings }}</td>
+            <td>{{ job.job_notes }}</td>
+            <td>
+              <a [routerLink]="['/jobs/',job.id]">
+                <fa-icon [icon]="icons.faEye"></fa-icon>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
