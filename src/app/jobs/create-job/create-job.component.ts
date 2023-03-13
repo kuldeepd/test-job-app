@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { JobService } from 'src/app/services/job.service';
+import { jobsApiActions } from 'src/app/store/job.actions';
+import { JobState } from 'src/app/store/job.reducer';
+import { getJobs } from 'src/app/store/job.selectors';
 
 @Component({
   selector: 'app-create-job',
@@ -46,7 +50,8 @@ export class CreateJobComponent {
   constructor(
     private fb:FormBuilder,
     private jobService:JobService,
-    private router : Router
+    private router : Router,
+    private store:Store<JobState>,
   ){}
 
   saveJob(){
@@ -57,6 +62,7 @@ export class CreateJobComponent {
     this.jobService.upsertJob(job).subscribe(
       jobSaved=>{
         if(jobSaved.id){
+          this.store.dispatch(jobsApiActions.jobAddedSuccess({job:jobSaved}))         
           this.router.navigateByUrl('/jobs');
         }
       }
