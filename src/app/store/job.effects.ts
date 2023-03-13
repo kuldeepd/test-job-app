@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, exhaustMap, catchError, tap } from 'rxjs/operators';
+import { map, exhaustMap, catchError, tap, switchMap } from 'rxjs/operators';
 import { JobService } from '../services/job.service';
 import { jobsApiActions,jobsPageActions } from './job.actions';
 
@@ -15,6 +15,15 @@ export class JobEffects {
   ) {}
  
   loadJobs$ = createEffect(() => this.actions$.pipe(
+      ofType(jobsPageActions.loadJobs),
+      switchMap(() =>
+        this.jobService.getAll().pipe(
+          map(jobs => jobsApiActions.jobsLoadedSuccess({ jobs })),
+          catchError(error => of(jobsApiActions.jobAddedFailure({ error })))
+        )
+      )
+    )
+    /* () => this.actions$.pipe(
     ofType(jobsPageActions.loadJobs),
     exhaustMap(() => this.jobService.getAll()
       .pipe(
@@ -22,6 +31,6 @@ export class JobEffects {
         map(jobs => jobsApiActions.jobsLoadedSuccess(jobs)),
         catchError(() => of({ type: '[Jobs API] Job Added Failure' }))
       ))
-    )
+    ) */
   )
 }

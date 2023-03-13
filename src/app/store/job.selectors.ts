@@ -1,29 +1,12 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Job } from '../jobs/job.model';
+import { JobState } from './job.reducer';
 
 export interface JobGroup {
-  product: Job;
-  count: number;
+  jobs: Job[];
 }
 
-export const selectCountProducts = createSelector(
+export const getJobs = createSelector(
   createFeatureSelector('jobEntries'),
-  (state: Job[]) => {
-    return state.length;
-  }
+  (state:JobState) =>state.jobs 
 );
-
-
-export const selectTotalPrice = createSelector(
-  createFeatureSelector('jobEntries'),
-  (state: Job[]) => {
-    //
-  }
-)
-
-export const selectGroupedCartEntries = createSelector(
-  createFeatureSelector('jobEntries'),
-  (state: Job[]) => {
-    //
-  }
-)

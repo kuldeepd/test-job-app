@@ -22,12 +22,12 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   providers:[
     JobService,
-    JobEffects,
+    /* JobEffects,
     {
       provide:USER_PROVIDED_EFFECTS,
       multi:true,
       useValue:[JobEffects]
-    }
+    } */
   ],
   imports: [
     CommonModule,

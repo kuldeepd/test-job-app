@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { JobService } from '../services/job.service';
 import { Job } from './job.model';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { jobsApiActions, jobsPageActions } from '../store/job.actions';
+import { JobState } from '../store/job.reducer';
+import { getJobs } from '../store/job.selectors';
 
 @Component({
   selector: 'app-jobs',
@@ -12,16 +15,24 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 })
 export class JobsComponent implements OnInit {
 
-  jobs$:Observable<Job[]> = this.jobService.getAll();
+  jobs$!:Observable<Job[]>;
   icons = {
     faEye
   }
 
   constructor(
-    private store:Store<{ jobs: Job[] }>,
+    private store:Store<JobState>,
     private jobService:JobService
   ){}
   ngOnInit(): void {
-    // this.store.dispatch({ type: '[Jobs Page] Load Jobs' });
+    this.jobs$ = this.store.pipe(
+      switchMap((jobState:any)=>{
+        if(!jobState || jobState.jobEntries.jobs.length<1) {       
+          return this.jobService.getAll().pipe(
+          tap(jobs => this.store.dispatch(jobsApiActions.jobsLoadedSuccess({jobs}))),
+        )}
+        else return this.store.pipe(select(getJobs))
+      })
+    );
   }
 }
