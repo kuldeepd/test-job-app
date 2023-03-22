@@ -10,7 +10,7 @@ const routes: Routes = [
     component: JobsComponent 
   },
   { 
-    path: 'new', 
+    path: 'create/:id', 
     component: CreateJobComponent 
   },
   { 

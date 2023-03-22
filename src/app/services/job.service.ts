@@ -20,7 +20,15 @@ export class JobService {
     return this.http.get<Job>(`${this.jobApiUrl}/${id}`);
   }
 
-  upsertJob(job:Job):Observable<Job>{
+  addJob(job:Job):Observable<Job>{
     return this.http.post<Job>(this.jobApiUrl,job);
+  }
+
+  updateJob(job:Job):Observable<Job>{
+    return this.http.put<Job>(`${this.jobApiUrl}/${job.id}`,job);
+  }
+
+  deleteJob(id:any){
+    return this.http.delete(`${this.jobApiUrl}/${id}`);
   }
 }

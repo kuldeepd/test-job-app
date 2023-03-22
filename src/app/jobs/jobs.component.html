@@ -4,7 +4,7 @@
       <h1>Jobs List</h1>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary float-end" routerLink="/jobs/new">Add Job</button>
+      <button class="btn btn-primary float-end" routerLink="/jobs/create/new">Add Job</button>
     </div>
   </div>
   <div class="row mt-3">    
@@ -20,7 +20,7 @@
             <th scope="col">Experience Required</th>
             <th scope="col"># of Openings</th>
             <th scope="col">Job Notes</th>
-            <th scope="col">Actions</th>
+            <th scope="col" style="width:150px;">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +39,12 @@
               <a [routerLink]="['/jobs/',job.id]">
                 <fa-icon [icon]="icons.faEye"></fa-icon>
               </a>
+              <a [routerLink]="['/jobs/create/',job.id]" class="ms-2">
+                <fa-icon [icon]="icons.faEdit"></fa-icon>
+              </a>
+              <a (click)="deleteJob(job.id)" class="text-danger ms-2" style="cursor:pointer;">
+                <fa-icon [icon]="icons.faTrash"></fa-icon>
+              </a>              
             </td>
           </tr>
         </tbody>
